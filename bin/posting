@@ -1,0 +1,3 @@
+#!/bin/bash
+
+posting --collection $(dirname "$0")/../posting/
