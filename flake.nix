@@ -5,17 +5,21 @@
     flake-utils.url = "github:numtide/flake-utils";
     nixpkgs.url = "github:NixOS/nixpkgs/release-24.05";
   };
-  outputs = { self, flake-utils, nixpkgs }@inputs:
+  outputs = { self, flake-utils, nixpkgs }:
     flake-utils.lib.eachDefaultSystem (system:
-      let
-        project_dep = inputs.nixpkgs.${system};
-        pkgs = import nixpkgs { inherit system; };
+      let pkgs = import nixpkgs { inherit system; };
       in {
-        devShells.default = project_dep.mkShell {
-          packages = with pkgs; [ podman podman-compose ];
+        devShells.default = pkgs.mkShell {
+          packages = with pkgs; [
+            podman
+            podman-compose
+            #TODO add go tooling
+            # cobra-cli
+          ];
 
           shellHook = ''
             nix --version
+            podman -v
           '';
         };
       });

@@ -4,15 +4,20 @@ Copyright © 2024 NAME HERE <EMAIL ADDRESS>
 package main
 
 import (
+	"binarytiger/jolly_roger/cmd"
 	"database/sql"
 	"fmt"
 	"net/http"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
+	_ "github.com/ncruces/go-sqlite3/driver"
+	_ "github.com/ncruces/go-sqlite3/embed"
 )
 
 func main() {
+	saveRawHook()
+	cmd.Execute()
 }
 
 func serve() {
