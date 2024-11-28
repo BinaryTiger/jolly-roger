@@ -1,14 +1,21 @@
+/*
+Copyright © 2024 NAME HERE <EMAIL ADDRESS>
+*/
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"net/http"
 
-	"github.com/go-chi/chi/v5"
-	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/middleware"
 )
 
 func main() {
+}
+
+func serve() {
 	r := chi.NewRouter()
 
 	r.Use(middleware.Logger)
@@ -34,4 +41,11 @@ func main() {
 
 	})
 	http.ListenAndServe(":3000", r)
+}
+
+func saveRawHook() {
+	var version string
+	db, _ := sql.Open("sqlite3", "file:local.db") // #TODO load as config
+	db.QueryRow(`SELECT sqlite_version()`).Scan(&version)
+	fmt.Println(version)
 }
