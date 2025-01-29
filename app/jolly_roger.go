@@ -25,11 +25,37 @@ func Serve() {
 
 	r.Route("/{vendor}", func(r chi.Router) {
 		r.Post("/receive", func(w http.ResponseWriter, r *http.Request) {
-			if vendor := chi.URLParam(r, "vendor"); vendor != "" {
-				w.Write([]byte(fmt.Sprintf("received for %s", vendor)))
-			} else {
-				w.Write([]byte("received at top level"))
+			vendor := chi.URLParam(r, "vendor")
+			if vendor == "" {
+				w.WriteHeader(http.StatusBadRequest)
+				w.Write([]byte("vendor parameter required"))
+				return
 			}
+
+			// TODO: Read request body
+			var payload []byte
+			_, err := r.Body.Read(payload)
+			if err != nil {
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write([]byte("failed to read request body"))
+				return
+			}
+
+			// TODO: Insert webhook into database
+			// Example SQL: INSERT INTO webhooks (vendor, payload, received_at) VALUES ($1, $2, NOW())
+			/*
+			if _, err := db.Exec(
+				"INSERT INTO webhooks (vendor, payload, received_at) VALUES ($1, $2, NOW())",
+				vendor,
+				payload,
+			); err != nil {
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write([]byte("failed to save webhook"))
+				return
+			}
+			*/
+
+			w.Write([]byte(fmt.Sprintf("received and saved webhook for %s", vendor)))
 		})
 
 	})
