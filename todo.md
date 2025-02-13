@@ -1,3 +1,5 @@
+TODO: Cleanup
+
 - [ ] Raw Request Storage
   - [ ] save raw requests
   - [ ] implement request body reading
@@ -17,7 +19,7 @@
   - [ ] implement database connection retry logic
   - [ ] add database connection timeout settings
 
-- [ ] Request Validation System
+- [ ] Request Validation System (chi middleware?)
   - [ ] implement vendor validation
   - [ ] add payload schema validation
   - [ ] implement authentication checks

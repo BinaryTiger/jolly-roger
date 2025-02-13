@@ -1,0 +1,48 @@
+layout {
+  cwd "/home/$USER/src"
+  default_tab_template {
+      // the default zellij tab-bar and status bar plugins
+      pane size=1 borderless=true {
+          plugin location="zellij:tab-bar"
+      }
+      children
+      pane size=1 borderless=true {
+          plugin location="zellij:status-bar"
+      }
+  }
+  tab name="[CODE]" hide_floating_panes=true cwd="jolly_roger" {
+      pane split_direction="vertical" {
+        pane {
+          command "nvim"
+          focus true
+          size "80%"
+        }
+        pane {
+          size "20%"
+        }
+      }
+    floating_panes {
+      pane cwd="jolly_roger" {
+        name "[GIT]"
+        command "lazygit"
+        //close_on_exit true
+        x "12%"
+        y "12%"
+        width "75%"
+        height "75%"
+      }
+      pane cwd="jolly_roger" {
+        //close_on_exit true
+        x "14%"
+        y "14%"
+        width "75%"
+        height "75%"
+      }
+    }
+  }
+  tab name="[TOOLS]" cwd="jolly_roger" {
+    pane {
+      size "80%"
+    }
+  }
+}

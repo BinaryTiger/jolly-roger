@@ -13,15 +13,9 @@ var cfgFile string
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "jolly_roger",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
+	Short: "Guiding your webhooks to safety",
+	Long: `A simple webservice to intake webhooks before passing them
+	to downstream services.`,
 	Run: func(cmd *cobra.Command, args []string) {},
 }
 
@@ -66,7 +60,7 @@ func initConfig() {
 
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
-		fmt.Fprintln(os.Stderr, "Using config file:", viper.ConfigFileUsed())
+		fmt.Fprintln(os.Stderr, "using config file:", viper.ConfigFileUsed())
 	} else {
 		fmt.Println("no config found")
 	}
