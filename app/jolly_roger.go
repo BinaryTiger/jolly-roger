@@ -44,15 +44,15 @@ func Serve() {
 			// TODO: Insert webhook into database
 			// Example SQL: INSERT INTO webhooks (vendor, payload, received_at) VALUES ($1, $2, NOW())
 			/*
-			if _, err := db.Exec(
-				"INSERT INTO webhooks (vendor, payload, received_at) VALUES ($1, $2, NOW())",
-				vendor,
-				payload,
-			); err != nil {
-				w.WriteHeader(http.StatusInternalServerError)
-				w.Write([]byte("failed to save webhook"))
-				return
-			}
+				if _, err := db.Exec(
+					"INSERT INTO webhooks (vendor, payload, received_at) VALUES ($1, $2, NOW())",
+					vendor,
+					payload,
+				); err != nil {
+					w.WriteHeader(http.StatusInternalServerError)
+					w.Write([]byte("failed to save webhook"))
+					return
+				}
 			*/
 
 			w.Write([]byte(fmt.Sprintf("received and saved webhook for %s", vendor)))
