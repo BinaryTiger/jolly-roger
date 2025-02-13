@@ -1,1 +1,2 @@
 - [ ] save raw requests
+- [ ] load database configuration from config file
