@@ -1,0 +1,8 @@
+[tools]
+go = "latest"
+"go:github.com/pressly/goose/v3/cmd/goose" = "latest"
+
+[env]
+GOOSE_DRIVER = "sqlite3"
+GOOSE_DBSTRING = "file:local.db"
+GOOSE_MIGRATION_DIR = "migrations"
