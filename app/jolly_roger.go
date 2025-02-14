@@ -1,11 +1,14 @@
 package jolly_roger
 
 import (
+	"database/sql"
 	"fmt"
 	"net/http"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
+	_ "github.com/ncruces/go-sqlite3/driver"
+	_ "github.com/ncruces/go-sqlite3/embed"
 )
 
 func Serve() {
@@ -34,7 +37,7 @@ func Serve() {
 
 			// TODO: Read request body
 			var payload []byte
-			_, err := r.Body.Read(payload)
+			body, err := r.Body.Read(payload)
 			if err != nil {
 				w.WriteHeader(http.StatusInternalServerError)
 				w.Write([]byte("failed to read request body"))
@@ -43,17 +46,18 @@ func Serve() {
 
 			// TODO: Insert webhook into database
 			// Example SQL: INSERT INTO webhooks (vendor, payload, received_at) VALUES ($1, $2, NOW())
-			/*
-				if _, err := db.Exec(
-					"INSERT INTO webhooks (vendor, payload, received_at) VALUES ($1, $2, NOW())",
-					vendor,
-					payload,
-				); err != nil {
-					w.WriteHeader(http.StatusInternalServerError)
-					w.Write([]byte("failed to save webhook"))
-					return
-				}
-			*/
+
+			db, _ := sql.Open("sqlite3", "file:local.db") // #TODO load as config
+			if _, err := db.Exec(
+				"INSERT INTO webhooks (vendor, raw_payload, processed_at) VALUES ($1, $2, $3)",
+				vendor,
+				body,
+				"now",
+			); err != nil {
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write([]byte("failed to save webhook"))
+				return
+			}
 
 			w.Write([]byte(fmt.Sprintf("received and saved webhook for %s", vendor)))
 		})
