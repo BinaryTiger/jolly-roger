@@ -1,0 +1,3 @@
+[database]
+goose_driver = "sqlite3"
+goose_dbstring = "file:local.db"
