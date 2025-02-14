@@ -1,0 +1,13 @@
+name: Simple Webhook Post Request
+method: POST
+url: http://localhost:3000/vendor1/receive
+body:
+  content: |-
+    {
+      "key1": "value1",
+      "key2": "value2"
+    }
+  content_type: application/json
+headers:
+- name: content-type
+  value: application/json
