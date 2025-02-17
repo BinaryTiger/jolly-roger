@@ -14,9 +14,8 @@ var cfgFile string
 var rootCmd = &cobra.Command{
 	Use:   "jolly_roger",
 	Short: "Guiding your webhooks to safety",
-	Long: `A simple webservice to intake webhooks before passing them
-	to downstream services.`,
-	Run: func(cmd *cobra.Command, args []string) {},
+	Long:  `A simple web service to intake webhooks before passing them to downstream services.`,
+	Run:   func(cmd *cobra.Command, args []string) {},
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -35,7 +34,7 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.jolly_roger.yaml)")
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file to read in			DEFAULT: $cwd/jolly_roger.toml")
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
@@ -48,8 +47,6 @@ func initConfig() {
 		// Use config file from the flag.
 		viper.SetConfigFile(cfgFile)
 	} else {
-		// Find home directory.
-
 		// Read config from app root directory
 		viper.AddConfigPath(".")
 		viper.SetConfigType("toml")

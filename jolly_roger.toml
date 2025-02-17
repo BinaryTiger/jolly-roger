@@ -1,0 +1,6 @@
+unested_config = "tycho"
+
+[storage]
+# sqlite3
+engine = "sqlite3"
+connection_string = "file:local.db"

@@ -1,13 +1,12 @@
 package cmd
 
 import (
-	app "binarytiger/jolly_roger/app"
+	app "jolly_roger/app"
 	"fmt"
 
 	"github.com/spf13/cobra"
 )
 
-// serveCmd represents the serve command
 var serveCmd = &cobra.Command{
 	Use:   "serve",
 	Short: "Spin the server",

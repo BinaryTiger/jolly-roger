@@ -1,7 +1,6 @@
 package jolly_roger
 
 import (
-	"database/sql"
 	"fmt"
 	"io"
 	"net/http"
@@ -12,7 +11,17 @@ import (
 	_ "github.com/ncruces/go-sqlite3/embed"
 )
 
+var persistence StorageEngine
+
 func Serve() {
+	persistence, err := NewFromViperSettings()
+
+	if err != nil {
+		// TODO meaninful error handling
+		fmt.Printf("could not load persistence config: %s", err)
+		return
+	}
+
 	r := chi.NewRouter()
 
 	r.Use(middleware.Logger)
@@ -45,12 +54,9 @@ func Serve() {
 				return
 			}
 
-			db, _ := sql.Open("sqlite3", "file:local.db") // #TODO load as config
-			if _, err := db.Exec(
-				"INSERT INTO webhooks (vendor, raw_body) VALUES ($1, $2)",
-				vendor,
-				payload,
-			); err != nil {
+			err = persistence.Store(vendor, payload)
+
+			if err != nil {
 				w.WriteHeader(http.StatusInternalServerError)
 				w.Write([]byte(fmt.Sprintf("failed to save webhook: %v", err)))
 				return
