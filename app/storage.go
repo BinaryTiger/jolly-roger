@@ -22,6 +22,8 @@ func NewFromViperSettings() (StorageEngine, error) {
 	switch engine {
 	case "sqlite3":
 		return newSqliteEngine(viper.GetString("storage.connection_string"))
+	case "":
+		return nil, errors.New("[storage.engine] needs to be defined in the config file, not assuming any default value")
 	default:
 		return nil, errors.New(fmt.Sprintf("%s is not a supported storage option", engine))
 	}
