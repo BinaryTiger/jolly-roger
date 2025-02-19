@@ -1,5 +1,7 @@
 [tools]
 go = "latest"
+"go:github.com/nats-io/nats-server/v2" = "main"
+"go:github.com/nats-io/natscli/nats" = "latest"
 "go:github.com/pressly/goose/v3/cmd/goose" = "latest"
 
 [env]

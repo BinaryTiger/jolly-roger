@@ -5,20 +5,32 @@ import (
 	"io"
 	"net/http"
 
+	"jolly_roger/app/storage"
+	"jolly_roger/app/stream"
+
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	_ "github.com/ncruces/go-sqlite3/driver"
 	_ "github.com/ncruces/go-sqlite3/embed"
 )
 
-var persistence StorageEngine
+var persistence storage.StorageEngine
+var streamOut stream.StreamEngine
 
 func Serve() {
-	persistence, err := NewFromViperSettings()
+	persistence, err := storage.NewFromViperSettings()
 
 	if err != nil {
 		// TODO meaninful error handling
 		fmt.Printf("could not load persistence config: %s", err)
+		return
+	}
+
+	streamOut, err := stream.NewFromViperSettings()
+
+	if err != nil {
+		// TODO meaninful error handling
+		fmt.Printf("could not load streaming config: %s", err)
 		return
 	}
 
@@ -31,9 +43,6 @@ func Serve() {
 
 	r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("alive"))
-	})
-	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("welcome"))
 	})
 
 	r.Route("/{vendor}", func(r chi.Router) {
@@ -57,6 +66,14 @@ func Serve() {
 			if err != nil {
 				w.WriteHeader(http.StatusInternalServerError)
 				w.Write([]byte(fmt.Sprintf("failed to save webhook: %v", err)))
+				return
+			}
+
+			err = streamOut.Pub(vendor, payload)
+
+			if err != nil {
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write([]byte(fmt.Sprintf("failed to stream webhook: %v", err)))
 				return
 			}
 

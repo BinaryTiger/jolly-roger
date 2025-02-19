@@ -1,0 +1,3 @@
+#!/bin/bash
+
+nats-server --config $(dirname "$0")/../nats.conf -DV

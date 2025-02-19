@@ -1,4 +1,4 @@
-package jolly_roger
+package storage
 
 import (
 	"database/sql"
