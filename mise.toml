@@ -8,3 +8,11 @@ go = "latest"
 GOOSE_DRIVER = "sqlite3"
 GOOSE_DBSTRING = "file:local.db"
 GOOSE_MIGRATION_DIR = "migrations"
+
+[tasks.posting]
+description = "open posting with project collection"
+run = "posting --collection posting/"
+
+[tasks.nats]
+description = "run nats backing server"
+run = "nats-server --config nats.conf -DV"

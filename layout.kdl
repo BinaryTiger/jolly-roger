@@ -49,14 +49,16 @@ layout {
     pane split_direction="vertical" {
       pane {
         size "70%"
-        command "bin/posting"
+        command "mise"
+        args "posting"
       }
       pane split_direction="horizontal" {
         size "30%"
 
         pane {  
           size "50%"
-          command "bin/nats"
+          command "mise"
+          args "nats"
         }
         pane {
           size "50%"
