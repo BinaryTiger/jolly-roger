@@ -45,8 +45,6 @@ func Serve() {
 				return
 			}
 
-			//io.Copy(os.Stdout, r.Body)
-			// TODO: Read request body
 			payload, err := io.ReadAll(r.Body)
 			if err != nil {
 				w.WriteHeader(http.StatusInternalServerError)
