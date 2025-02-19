@@ -16,3 +16,8 @@ run = "posting --collection posting/"
 [tasks.nats]
 description = "run nats backing server"
 run = "nats-server --config nats.conf -DV"
+
+[tasks."db:up"]
+description = "run migrations"
+run = "goose up"
+
