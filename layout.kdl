@@ -38,18 +38,32 @@ layout {
         width "75%"
         height "75%"
       }
-      pane cwd="jolly_roger" {
-        //close_on_exit true
-        x "16%"
-        y "16%"
-        width "75%"
-        height "75%"
-      }
     }
   }
   tab name="[TOOLS]" cwd="jolly_roger" {
     pane {
       size "80%"
+    }
+  }
+  tab name="[TESTING]" cwd="jolly_roger" {
+    pane split_direction="vertical" {
+      pane {
+        size "70%"
+        command "bin/posting"
+      }
+      pane split_direction="horizontal" {
+        size "30%"
+
+        pane {  
+          size "50%"
+          command "bin/nats"
+        }
+        pane {
+          size "50%"
+          command "go"
+          args "run" "." "serve"
+        }
+      }
     }
   }
 }
