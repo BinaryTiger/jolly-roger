@@ -10,10 +10,6 @@ I already implemented it in the easiest form I could thing of. It feels like che
 
 Now the hard part. I will build a testing framework around this to get real working data to guide the optimization strategies to explore.
 
-Chi (Router)
-sqlite3 (Storage)
-nats (Stream broker)
-
  | lib     | now     | plan       |
  | ------- | ------- | ---------- |
  | Router  | Chi     | ?          |
