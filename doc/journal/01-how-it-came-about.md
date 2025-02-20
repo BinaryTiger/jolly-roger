@@ -2,7 +2,7 @@
 
 Although receiving web hooks were typically a pain point in systems I have work on in the past, I never had the space to solve this problem properly.
 
-[../images/simple_view.png]
+![high level diagram](../images/simple_view.png)
 
 Doesn't seem that complicated (famous last words).
 
