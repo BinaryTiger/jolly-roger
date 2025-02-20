@@ -1,0 +1,8 @@
+[storage]
+# sqlite3
+engine = "sqlite3"
+connection_string = "file:test.db"
+
+[stream]
+engine = "nats"
+connection_string = "nats://127.0.0.1:4223"

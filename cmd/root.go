@@ -1,11 +1,11 @@
 package cmd
 
 import (
-	"fmt"
 	"os"
 
+	app "jolly_roger/app"
+
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
 var cfgFile string
@@ -43,22 +43,5 @@ func init() {
 
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
-	if cfgFile != "" {
-		// Use config file from the flag.
-		viper.SetConfigFile(cfgFile)
-	} else {
-		// Read config from app root directory
-		viper.AddConfigPath(".")
-		viper.SetConfigType("toml")
-		viper.SetConfigName("jolly_roger.toml")
-	}
-
-	viper.AutomaticEnv() // read in environment variables that match
-
-	// If a config file is found, read it in.
-	if err := viper.ReadInConfig(); err == nil {
-		fmt.Fprintln(os.Stderr, "using config file:", viper.ConfigFileUsed())
-	} else {
-		fmt.Println("no config found")
-	}
+	app.InitConfig(cfgFile)
 }

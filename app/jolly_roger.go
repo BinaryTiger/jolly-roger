@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 
 	"jolly_roger/app/storage"
 	"jolly_roger/app/stream"
@@ -12,10 +13,32 @@ import (
 	"github.com/go-chi/chi/middleware"
 	_ "github.com/ncruces/go-sqlite3/driver"
 	_ "github.com/ncruces/go-sqlite3/embed"
+	"github.com/spf13/viper"
 )
 
 var persistence storage.StorageEngine
 var streamOut stream.StreamEngine
+
+func InitConfig(cfgFile string) {
+	if cfgFile != "" {
+		// Use config file from the flag.
+		viper.SetConfigFile(cfgFile)
+	} else {
+		// Read config from app root directory
+		viper.AddConfigPath(".")
+		viper.SetConfigType("toml")
+		viper.SetConfigName("jolly_roger.toml")
+	}
+
+	viper.AutomaticEnv() // read in environment variables that match
+
+	// If a config file is found, read it in.
+	if err := viper.ReadInConfig(); err == nil {
+		fmt.Fprintln(os.Stderr, "using config file:", viper.ConfigFileUsed())
+	} else {
+		fmt.Println("no config found")
+	}
+}
 
 func Serve() {
 	persistence, err := storage.NewFromViperSettings()

@@ -1,8 +1,8 @@
 package cmd
 
 import (
-	app "jolly_roger/app"
 	"fmt"
+	app "jolly_roger/app"
 
 	"github.com/spf13/cobra"
 )
@@ -11,7 +11,7 @@ var serveCmd = &cobra.Command{
 	Use:   "serve",
 	Short: "Spin the server",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("serve called")
+		fmt.Println("server started")
 		app.Serve()
 	},
 }
