@@ -21,3 +21,11 @@ run = "nats-server --config nats.conf -DV"
 description = "run migrations"
 run = "goose up"
 
+[tasks.test]
+description = "run unit tests"
+run = "go test ./..."
+
+[tasks."test-integration"]
+description = "run integration tests"
+run = "go test ./test/integration/... -v"
+
