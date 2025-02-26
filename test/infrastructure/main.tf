@@ -1,22 +1,22 @@
 terraform {
   required_providers {
-    docker = {
-      source  = "kreuzwerker/docker"
-      version = "~> 3.0.0"
+    podman = {
+      source  = "fbreckle/podman"
+      version = "~> 0.5.0"
     }
   }
 }
 
-provider "docker" {}
+provider "podman" {}
 
-resource "docker_image" "nats" {
+resource "podman_image" "nats" {
   name = "nats:latest"
   keep_locally = true
 }
 
-resource "docker_container" "nats_server" {
+resource "podman_container" "nats_server" {
   name  = "nats_test_server"
-  image = docker_image.nats.image_id
+  image = podman_image.nats.name
   
   ports {
     internal = 4222
